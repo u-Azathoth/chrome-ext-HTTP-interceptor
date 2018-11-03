@@ -1,0 +1,18 @@
+{
+  "name": "HTTP Interceptor",
+  "author": "Nikolay Veretlnik",
+  "description": "",
+  "version": "0.1",
+  "permissions": [
+    "debugger"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "HTTP Interceptor"
+  },
+  "manifest_version": 2
+}
+

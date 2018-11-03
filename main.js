@@ -1,5 +1,7 @@
 const tabId = parseInt(window.location.search.substring(1), 10);
 
+// Define Action and Events
+// Redux/Flux style
 const NetworkEvents = {
   BeforeSendRequest: 'Network.requestWillBeSent',
   GettingReponse: 'Network.responseReceived',
@@ -10,6 +12,7 @@ const NetworkActions = {
   GetResponseBody: 'Network.getResponseBody',
 };
 
+// Set Events Listeners. And unsubscribe on unload.
 window.addEventListener('load', () => {
   chrome.debugger.sendCommand({ tabId }, NetworkActions.Enable);
   chrome.debugger.onEvent.addListener(onEvent);
@@ -17,6 +20,7 @@ window.addEventListener('load', () => {
 
 window.addEventListener('unload', () => chrome.debugger.detach({ tabId }));
 
+// TODO Remove this global variable and create Class for handling.
 let requests = {};
 
 function onEvent(debuggeeId, message, params) {
@@ -24,6 +28,7 @@ function onEvent(debuggeeId, message, params) {
 
   const { BeforeSendRequest, GettingReponse } = NetworkEvents;
 
+  // Like Redux/Flux Reducer
   switch (message) {
     case BeforeSendRequest:
       BeforeSendRequestHandler(params);
@@ -70,6 +75,8 @@ function appendResponse(requestId, response, bodyResponse = { body }) {
   const { body } = bodyResponse;
 
   if (!requestDiv || !body) { return; }
+
+  // Here you can handle response body.
 
   const bodyElement = document.createElement('pre');
   bodyElement.textContent = body;
